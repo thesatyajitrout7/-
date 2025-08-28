@@ -1,0 +1,563 @@
+<!--
+  Satyajit – Modern One-Page Portfolio (GitHub Pages ready)
+  Single-file HTML with embedded CSS & JS. Just upload as index.html.
+  Features: sticky smooth-scroll navbar, typing intro (Typed.js),
+  scroll reveal animations (ScrollReveal), dark/light mode with memory,
+  mobile hamburger, glass cards, back-to-top button, resume button.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>सत्यजीत राउत-ସତ୍ୟଜିତ୍ ରାଉତ | Portfolio</title>
+  <meta name="description" content="Satyajit's modern developer portfolio – projects, skills, and contact." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: rgba(255,255,255,0.06);
+      --text: #eaf2ff;
+      --muted: #a9b1c5;
+      --brand: #54e0c7;
+      --brand-2: #70a3ff;
+      --card: rgba(255,255,255,0.08);
+      --border: rgba(255,255,255,0.12);
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+    .light {
+      --bg: #f7fafc;
+      --panel: rgba(0,0,0,0.04);
+      --text: #0e1222;
+      --muted: #51607a;
+      --brand: #116dff;
+      --brand-2: #10b981;
+      --card: rgba(0,0,0,0.05);
+      --border: rgba(0,0,0,0.08);
+      --shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: radial-gradient(1200px 800px at 80% -10%, rgba(84,224,199,0.12), transparent 50%),
+                  radial-gradient(900px 700px at -10% 30%, rgba(112,163,255,0.12), transparent 50%),
+                  var(--bg);
+      color: var(--text);
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* Navbar */
+    .nav {
+      position: fixed; inset: 0 0 auto 0; height: 64px;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 50; backdrop-filter: blur(10px);
+    }
+    .nav-inner {
+      width: min(1100px, 92%);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 10px 16px;
+      box-shadow: var(--shadow);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+    .brand i { color: var(--brand); font-size: 22px; }
+    .links { display: flex; gap: 18px; }
+    .links a { padding: 8px 10px; border-radius: 10px; color: var(--muted); font-weight: 600; }
+    .links a.active, .links a:hover { color: var(--text); background: var(--card); }
+    .right { display: flex; align-items: center; gap: 10px; }
+    .btn-small { border: 1px solid var(--border); background: var(--card); color: var(--text);
+      padding: 8px 12px; border-radius: 10px; font-weight: 600; cursor: pointer; }
+    .icon-btn { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 10px; border: 1px solid var(--border); background: var(--card); cursor: pointer; }
+
+    /* Mobile */
+    .hamburger { display: none; }
+    .mobile-menu { position: fixed; top: 72px; left: 50%; transform: translateX(-50%);
+      width: min(560px, 92%); background: var(--panel); border: 1px solid var(--border);
+      border-radius: 16px; padding: 12px; display: none; flex-direction: column; gap: 8px; box-shadow: var(--shadow); }
+    .mobile-menu a { padding: 12px; background: var(--card); border-radius: 12px; color: var(--muted); font-weight: 600; }
+    .mobile-menu a:hover { color: var(--text); }
+
+    /* Hero */
+    .hero { padding: 120px 0 40px; }
+    .container { width: min(1100px, 92%); margin: 0 auto; }
+    .hero-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; }
+    .headline { font-size: clamp(28px, 5vw, 48px); line-height: 1.15; font-weight: 700; }
+    .subhead { color: var(--muted); margin-top: 12px; font-size: clamp(16px, 2.2vw, 18px); }
+    .cta { margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn { padding: 12px 16px; border-radius: 12px; font-weight: 700; border: 1px solid var(--border); }
+    .btn.primary { background: linear-gradient(135deg, var(--brand), var(--brand-2)); color: #041018; border: none; }
+    .btn.ghost { background: var(--card); color: var(--text); }
+    .hero-card { background: var(--panel); border: 1px solid var(--border); border-radius: 20px; padding: 22px; box-shadow: var(--shadow); }
+    .hero-card .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; }
+    .hero-profile {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+
+
+
+    /* Sections */
+    section { scroll-margin-top: 90px; }
+    .section { padding: 70px 0; }
+    .section h2 { font-size: clamp(22px, 3.6vw, 32px); margin-bottom: 26px; }
+
+    /* Cards */
+    .grid { display: grid; gap: 18px; }
+    .grid.projects { grid-template-columns: repeat(3, 1fr); }
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: var(--shadow); transition: transform .25s ease, background .25s ease; }
+    .card:hover { transform: translateY(-6px); background: var(--card); }
+    .card h3 { margin: 6px 0 10px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag { padding: 6px 10px; background: var(--card); border: 1px solid var(--border); border-radius: 999px; font-size: 12px; color: var(--muted); font-weight: 700; }
+    .card .actions { display: flex; gap: 10px; margin-top: 12px; }
+
+    /* Contact */
+    .contact-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .contact-item { display: flex; align-items: center; gap: 12px; background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; }
+  
+
+    .contact-row {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 20px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 16px;
+      transition: transform 0.25s, background 0.25s, box-shadow 0.25s;
+    }
+
+    .contact-item i {
+      font-size: 20px;
+    }
+
+    .contact-item:hover {
+      transform: translateY(-6px);
+      background: rgba(255,255,255,0.08);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      cursor: pointer;
+    }
+
+     
+
+
+
+
+
+
+
+    /* Footer */
+    footer { padding: 40px 0 60px; color: var(--muted); text-align: center; }
+
+    /* Back to top */
+    #toTop { position: fixed; right: 18px; bottom: 18px; width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--border); background: var(--card); display: grid; place-items: center; box-shadow: var(--shadow); cursor: pointer; opacity: 0; visibility: hidden; transition: opacity .2s ease; }
+    #toTop.show { opacity: 1; visibility: visible; }
+
+    /* Responsive */
+    @media (max-width: 920px) {
+      .links { display: none; }
+      .hamburger { display: grid; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .grid.projects { grid-template-columns: 1fr 1fr; }
+      .contact-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .grid.projects { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <div class="nav">
+    <div class="nav-inner">
+      <div class="brand"><i class="ri-flashlight-line"></i> <span>ସତ୍ୟଜିତ୍ ରାଉତ</span></div>
+      <div class="links" id="deskLinks">
+        <a href="#home" class="active">Home</a>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="right">
+        <button class="btn-small" id="resumeBtn"><i class="ri-download-2-line"></i>&nbsp; Resume</button>
+        <button class="icon-btn" id="themeBtn" title="Toggle theme"><i class="ri-moon-line"></i></button>
+        <button class="icon-btn hamburger" id="menuBtn" title="Menu"><i class="ri-menu-4-line"></i></button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+
+  
+
+
+
+
+
+
+  
+<!-- ===== HERO (REPLACE YOUR OLD HERO SECTION WITH THIS) ===== -->
+<section id="hero" class="hero" style="padding:60px 20px; background:linear-gradient(120deg,#0b1220,#0f1724); color:#fff;">
+  <div class="container" style="max-width:1100px;margin:0 auto;">
+    <div class="hero-content" style="
+          display:flex;
+          align-items:center;
+          justify-content:space-between;
+          gap:28px;
+          flex-direction:column-reverse; /* mobile: photo above, text below */
+        ">
+      <!-- LEFT: Main text -->
+      <div class="hero-text animate-fadeInUp" style="flex:1;min-width:260px;text-align:center;">
+        <h1 style="font-size:clamp(28px,4.5vw,44px);margin:0 0 12px 0;font-weight:700;">
+          <span id="typing-text" style="display:inline-block;border-right:2px solid rgba(56,189,248,0.9);padding-right:6px;white-space:nowrap;overflow:hidden;"></span>
+        </h1>
+        <p class="sub" style="color:#cbd5e1;margin:6px 0 0 0;font-size:1.05rem;">I write automation scripts to automate manual work. Reduced 70% of manual data extraction through automation. Hands-on experience in web scraping, automation and APIs. Expertise in Python,
+            Beautiful Soup, Selenium, SQL and Django framework.</p>
+
+        <div class="cta" style="margin-top:18px;display:flex;gap:12px;justify-content:center;">
+          <a href="#projects" style="background:linear-gradient(90deg,#22d3ee,#60a5fa);color:#041018;padding:10px 14px;border-radius:10px;font-weight:700;text-decoration:none;">View Projects</a>
+          <a href="#contact" style="border:1px solid rgba(255,255,255,0.08);padding:10px 14px;border-radius:10px;color:#e2e8f0;text-decoration:none;">Contact</a>
+        </div>
+      </div>
+
+      <!-- RIGHT: Photo + Meta (photo on top, meta below) -->
+      <aside class="hero-side animate-fadeInUp delay-150" style="flex:0 0 260px;display:flex;flex-direction:column;align-items:center;margin-left:20px;">
+        <!-- Rectangle image with soft edges -->
+        <img src="profile.jpg" alt="Satyajit photo"
+             style="width:220px;max-width:100%;height:auto;border-radius:14px;object-fit:cover;border:2px solid rgba(255,255,255,0.06);box-shadow:0 10px 30px rgba(2,6,23,0.6);transition:box-shadow .35s,transform .35s;">
+        <!-- Meta below image -->
+        <div class="hero-meta" style="margin-top:14px;text-align:center;color:#cbd5e1;">
+          <p style="margin:6px 0;"><strong style="color:#e6f7ff;">Role:</strong> Python / Full-Stack Learner</p>
+          <p style="margin:6px 0;"><strong style="color:#e6f7ff;">Location:</strong> India (IST)</p>
+          <p style="margin:6px 0;"><strong style="color:#e6f7ff;">Tech:</strong> Python · Django · JS · HTML · CSS</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<!-- Typing effect (guarded so it won't double-run) -->
+<script>
+(function () {
+  if (window.__heroTypingInitialized) return;
+  window.__heroTypingInitialized = true;
+
+  const el = document.getElementById('typing-text');
+  if (!el) return;
+
+  const text = "Hey Folks, This is Satyajit 🚀";
+  let i = 0;
+  function type() {
+    if (i < text.length) {
+      el.textContent += text.charAt(i++);
+      setTimeout(type, 80);
+    } else {
+      // keep cursor blinking after typing complete
+      el.style.borderRight = '2px solid rgba(56,189,248,0.9)';
+      // optional: remove border after a while or loop — currently leaves cursor
+    }
+  }
+  // start slightly after load so other scripts/styles settle
+  window.addEventListener('load', () => setTimeout(type, 120));
+})();
+</script>
+
+<!-- Small animations CSS (paste into your existing style area if you prefer) -->
+<style>
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeInUp { animation: fadeInUp 700ms ease-out forwards; opacity: 0; }
+.delay-150 { animation-delay: 150ms; }
+@media (min-width: 768px) {
+  /* switch to side-by-side on larger screens */
+  .hero-content { flex-direction: row !important; }
+  .hero-text { text-align: left !important; }
+}
+@media (max-width: 767px) {
+  /* mobile: center text */
+  .hero-text { text-align: center !important; }
+}
+</style>
+
+<script>
+window.addEventListener('load', () => {
+  document.querySelectorAll('.contact-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const url = item.dataset.url?.trim();
+      if (!url) return;
+
+      if (url.startsWith('mailto:')) {
+        // Open mail client
+        window.location.href = url;
+      } else {
+        // Open external links in new tab
+        window.open(url, '_blank', 'noopener,noreferrer');
+      }
+    });
+  });
+});
+</script>
+
+
+        
+
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="container reveal">
+      <h2>About Me</h2>
+      <p style="color:var(--muted);max-width:800px">Hey! I'm <strong>Satyajit</strong> — Web scraping is my favorite area of coding. It’s both incredibly frustrating and extremely rewarding. The best thing about scraping is that the possibilities are endless. There’s virtually infinite data on the internet, and a lot of it is super easy to collect with a simple scraper..</p>
+      <div class="grid" style="grid-template-columns: repeat(3, 1fr); margin-top:18px">
+        <div class="card"><h3>Focus</h3><p style="color:var(--muted)">Data Scraping, Automation, REST APIs, Web Apps</p></div>
+        <div class="card"><h3>Stack</h3><p style="color:var(--muted)">Python, Django, JS, SQLite</p></div>
+        <div class="card"><h3>Soft Skills</h3><p style="color:var(--muted)">Problem‑solving, writing, teamwork</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="section">
+    <div class="container reveal">
+      <h2>Projects</h2>
+      <div class="grid projects">
+        <article class="card">
+          <h3>Data Scraping / Web Scraping for " MyWellaBee "Project
+          </h3>
+          <p style="color:var(--muted)">Developed a Python-based tool script to collect important data from different websites of different countries around the world
+            .During the same time I wrote different scripts by using python libraries, modules and VN which help to scrape data from
+            challenging websites.</p>
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">Automation</span><span class="tag">Selenium</span><span class="tag">Beautiful Soup</span>
+          </div>
+          <div class="actions">
+            <a class="btn ghost" href="https://github.com/yourusername/inventory-management" target="_blank"><i class="ri-github-line"></i> Code</a>
+            <a class="btn" style="background:var(--card)" href="#" target="_blank"><i class="ri-external-link-line"></i> Demo</a>
+          </div>
+        </article>
+        <article class="card">
+          <h3>IPL Auction Software</h3>
+          <p style="color:var(--muted)">Simulate player auctions with budgets and teams.</p>
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">WebSockets</span>
+          </div>
+          <div class="actions">
+            <a class="btn ghost" href="https://github.com/yourusername/ipl-auction" target="_blank"><i class="ri-github-line"></i> Code</a>
+            <a class="btn" style="background:var(--card)" href="#" target="_blank"><i class="ri-external-link-line"></i> Demo</a>
+          </div>
+        </article>
+        <article class="card">
+          <h3>School Management System</h3>
+          <p style="color:var(--muted)">Django app to manage students, teachers and academics.</p>
+          <div class="tags">
+            <span class="tag">Django</span><span class="tag">SQLite</span><span class="tag">Bootstrap</span>
+          </div>
+          <div class="actions">
+            <a class="btn ghost" href="https://github.com/yourusername/school-management" target="_blank"><i class="ri-github-line"></i> Code</a>
+            <a class="btn" style="background:var(--card)" href="#" target="_blank"><i class="ri-external-link-line"></i> Demo</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+
+
+<!-- ===== EXPERIENCE ===== -->
+<section id="experience" class="section">
+  <div class="container reveal">
+    <h2>Experience</h2>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px;">
+      <div class="card">
+        <h3>Software Engineer</h3>
+        <p style="color:var(--muted); margin: 6px 0;">AMG Solutions | 2024 – Present</p>
+        <p style="color:var(--muted); font-size: 0.95rem;">Built web apps and small responsive websites for local businesses using Django, HTML, CSS, and JS.</p>
+      </div>
+      <div class="card">
+        <h3>Data Engineer</h3>
+        <p style="color:var(--muted); margin: 6px 0;">Credencesoft Pvt. Ltd. | Aug 2022 – Aug 2023</p>
+        <p style="color:var(--muted); font-size: 0.95rem;">Built Python-based scripts to scrape hotel/accommodation data using BeautifulSoup & Selenium.
+            Managed automation, JSON formatting, and data validation .
+            Reduced manual data entry by 70% through automation .
+            Uploaded processed data to internal tools using custom scripts..</p>
+      </div>
+      <div class="card">
+        <h3>Student Intern</h3>
+        <p style="color:var(--muted); margin: 6px 0;">JSpider, Bangalore | 2021 – 2022</p>
+        <p style="color:var(--muted); font-size: 0.95rem;">Successfully completed an intensive 8-month training in Java full stack development, including Core Java, SQL, SpringBoot,
+            and basic frontend technologies..
+            Simultaneously engaged in hands-on internship projects to apply learned concepts in real-world scenarios..
+            Built mini-projects using Java and SQL to reinforce backend logic and database handling.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== EDUCATION ===== -->
+<section id="education" class="section">
+  <div class="container reveal">
+    <h2>Education</h2>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px;">
+      <div class="card">
+        <h3>M.Tech in Data Science</h3>
+        <p style="color:var(--muted); margin: 6px 0;">Institute of Management and Information Technology, Cuttack,    Present</p>
+        <p style="color:var(--muted); font-size: 0.95rem;">Focus on Advance Data Structure & Algorithms, Machine Learning, Deep Learning, Big Data and Natural Language Processing .</p>
+      </div>
+      <div class="card">
+        <h3>Java Full Stack</h3>
+        <p style="color:var(--muted); margin: 6px 0;">JSpider, Bangalore, 2021 - 2022</p>
+        <p style="color:var(--muted); font-size: 0.95rem;">Completed Java Fullstack course with all major subjects like Core Java, Web Technologies(HTML,CSS ,Javascripts) & SQL.</p>
+      </div>
+      <div class="card">
+        <h3>B.Tech in Computer Science & Engineering</h3>
+        <p style="color:var(--muted); margin: 6px 0;">DRIEMS University, 2017 – 2021</p>
+        <p style="color:var(--muted); font-size: 0.95rem;">The Program includes core subjects like Data Structures & Algorithms, Operating Systems, Computer Networks, and Programming Languages, along with foundational courses in Discrete Mathematics, Computer Architecture, and Software Engineering.I also take electives in specialized areas such as Artificial Intelligence, Machine Learning, Cybersecurity, and Cloud Computing, with practical application through lab work, projects, and internships. </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+  <!-- CONTACT -->
+<section id="contact" class="section">
+  <div class="container reveal">
+    <h2>Contact</h2>
+    <div class="contact-row">
+      <div class="contact-item" data-url="mailto:satyajitthedev@gmail.com">
+        <i class="ri-mail-line"></i> <span>Email</span>
+      </div>
+      <div class="contact-item" data-url="https://github.com/thesatyajitrout7">
+        <i class="ri-github-line"></i> <span>GitHub</span>
+      </div>
+      <div class="contact-item" data-url="https://www.linkedin.com/in/satyajit-rout-/">
+        <i class="ri-linkedin-fill"></i> <span>LinkedIn</span>
+      </div>
+      <div class="contact-item" data-url="resume.pdf">
+        <i class="ri-file-download-line"></i> <span>Resume</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <footer>
+    Copyright © 2024-25. All rights reserved 
+    <br>
+    <span id="year"></span>Designed & Developed by Satyajit Rout ❤️ 
+  </footer>
+
+  <button id="toTop" aria-label="Back to top"><i class="ri-arrow-up-line"></i></button>
+
+  <!-- Libs: Typed.js & ScrollReveal -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <script>
+    // Typing intro
+    const typed = new Typed('#typing-text', {
+  strings: [
+    'Hey Folks 👋',
+    'This is <strong>Satyajit</strong> 👨🏻‍💻',
+    'Python Developer 🐍',
+    'Full-Stack Learner 💻',
+    'Tech Enthusiast ⚡'
+  ],
+  typeSpeed: 55,
+  backSpeed: 35,
+  smartBackspace: true,
+  loop: true
+});
+
+
+    // Theme toggle with memory
+    const themeBtn = document.getElementById('themeBtn');
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') document.documentElement.classList.add('light');
+    themeBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('light');
+      const mode = document.documentElement.classList.contains('light') ? 'light' : 'dark';
+      themeBtn.innerHTML = mode === 'light' ? '<i class="ri-sun-line"></i>' : '<i class="ri-moon-line"></i>';
+      localStorage.setItem('theme', mode);
+    });
+
+    // Resume button (edit the URL below)
+    document.getElementById('resumeBtn').addEventListener('click', () => {
+      // Replace with your real resume URL (PDF in repo or Google Drive direct link)
+      window.open('resume.pdf', '_blank');
+    });
+
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const toggleMenu = () => mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+    menuBtn.addEventListener('click', toggleMenu);
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.style.display = 'none'));
+
+    // Active link highlight on scroll
+    const links = [...document.querySelectorAll('.links a')];
+    const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+    const onScroll = () => {
+      const y = window.scrollY + 100;
+      sections.forEach((sec, i) => {
+        const top = sec.offsetTop, bottom = top + sec.offsetHeight;
+        if (y >= top && y < bottom) {
+          links.forEach(l => l.classList.remove('active'));
+          links[i].classList.add('active');
+        }
+      });
+      // Back to top button
+      document.getElementById('toTop').classList.toggle('show', window.scrollY > 400);
+    };
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+
+    // Back to top
+    document.getElementById('toTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // ScrollReveal animations
+    const sr = ScrollReveal({ distance: '40px', duration: 800, easing: 'cubic-bezier(.2,.6,.2,1)', cleanup: true });
+    sr.reveal('.headline', { origin: 'left' });
+    sr.reveal('.subhead, .cta', { origin: 'bottom', interval: 100 });
+    sr.reveal('.hero-card', { origin: 'right' });
+    sr.reveal('.reveal .card', { origin: 'bottom', interval: 120 });
+    sr.reveal('.contact-item', { origin: 'bottom', interval: 100 });
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
