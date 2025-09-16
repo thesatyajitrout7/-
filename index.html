@@ -240,32 +240,6 @@
 </section>
 
 
-<!-- Typing effect (guarded so it won't double-run) -->
-<script>
-(function () {
-  if (window.__heroTypingInitialized) return;
-  window.__heroTypingInitialized = true;
-
-  const el = document.getElementById('typing-text');
-  if (!el) return;
-
-  const text = "Hey Folks, This is Satyajit 🚀";
-  let i = 0;
-  function type() {
-    if (i < text.length) {
-      el.textContent += text.charAt(i++);
-      setTimeout(type, 80);
-    } else {
-      // keep cursor blinking after typing complete
-      el.style.borderRight = '2px solid rgba(56,189,248,0.9)';
-      // optional: remove border after a while or loop — currently leaves cursor
-    }
-  }
-  // start slightly after load so other scripts/styles settle
-  window.addEventListener('load', () => setTimeout(type, 120));
-})();
-</script>
-
 <!-- Small animations CSS (paste into your existing style area if you prefer) -->
 <style>
 @keyframes fadeInUp {
@@ -529,4 +503,5 @@ window.addEventListener('load', () => {
   </script>
 </body>
 </html>
+
 
