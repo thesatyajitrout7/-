@@ -427,22 +427,24 @@ window.addEventListener('load', () => {
 
   <!-- Libs: Typed.js & ScrollReveal -->
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-  <script src="https://unpkg.com/scrollreveal"></script>
-  <script>
-    // Typing intro
-    const typed = new Typed('#typing-text', {
-  strings: [
-    'Hey Folks 👋',
-    'This is <strong>Satyajit</strong> 👨🏻‍💻',
-    'Python Developer 🐍',
-    'Full-Stack Learner 💻',
-    'Tech Enthusiast ⚡'
-  ],
-  typeSpeed: 55,
-  backSpeed: 35,
-  smartBackspace: true,
-  loop: true
-});
+
+<script>
+  const typed = new Typed('#typing-text', {
+    strings: [
+      'Hey Folks 👋',
+      'This is <strong>Satyajit</strong> 👨🏻‍💻',
+      'Python Developer 🐍',
+      'Full-Stack Learner 💻',
+      'Tech Enthusiast ⚡'
+    ],
+    typeSpeed: 55,
+    backSpeed: 35,
+    smartBackspace: false, // ✅ Off to prevent emoji repetition
+    loop: true,            // Loop if you want the effect to repeat
+    showCursor: true,
+    cursorChar: '|'
+  });
+</script>
 
 
     // Theme toggle with memory
@@ -503,5 +505,6 @@ window.addEventListener('load', () => {
   </script>
 </body>
 </html>
+
 
 
