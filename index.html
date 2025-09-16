@@ -417,18 +417,20 @@ window.addEventListener('load', () => {
 </section>
 
 
-  <footer>
-    Copyright © 2024-25. All rights reserved 
-    <br>
-    <span id="year"></span>Designed & Developed by Satyajit Rout ❤️ 
-  </footer>
+ <footer>
+  Copyright © 2024-25. All rights reserved 
+  <br>
+  <span id="year"></span> Designed & Developed by Satyajit Rout ❤️ 
+</footer>
 
-  <button id="toTop" aria-label="Back to top"><i class="ri-arrow-up-line"></i></button>
+<button id="toTop" aria-label="Back to top"><i class="ri-arrow-up-line"></i></button>
 
-  <!-- Libs: Typed.js & ScrollReveal -->
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<!-- Libs: Typed.js & ScrollReveal -->
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
 
 <script>
+  // Typing intro
   const typed = new Typed('#typing-text', {
     strings: [
       'Hey Folks 👋',
@@ -444,67 +446,66 @@ window.addEventListener('load', () => {
     showCursor: false,
     cursorChar: '|'
   });
+
+  // Theme toggle with memory
+  const themeBtn = document.getElementById('themeBtn');
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'light') document.documentElement.classList.add('light');
+
+  themeBtn.addEventListener('click', () => {
+    document.documentElement.classList.toggle('light');
+    const mode = document.documentElement.classList.contains('light') ? 'light' : 'dark';
+    themeBtn.innerHTML = mode === 'light' ? '<i class="ri-sun-line"></i>' : '<i class="ri-moon-line"></i>';
+    localStorage.setItem('theme', mode);
+  });
+
+  // Resume button
+  document.getElementById('resumeBtn').addEventListener('click', () => {
+    window.open('resume.pdf', '_blank');
+  });
+
+  // Mobile menu
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const toggleMenu = () => mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+  menuBtn.addEventListener('click', toggleMenu);
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.style.display = 'none'));
+
+  // Active link highlight on scroll
+  const links = [...document.querySelectorAll('.links a')];
+  const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+  const onScroll = () => {
+    const y = window.scrollY + 100;
+    sections.forEach((sec, i) => {
+      const top = sec.offsetTop, bottom = top + sec.offsetHeight;
+      if (y >= top && y < bottom) {
+        links.forEach(l => l.classList.remove('active'));
+        links[i].classList.add('active');
+      }
+    });
+    // Back to top button
+    document.getElementById('toTop').classList.toggle('show', window.scrollY > 400);
+  };
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+
+  // Back to top
+  document.getElementById('toTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // ScrollReveal animations
+  const sr = ScrollReveal({ distance: '40px', duration: 800, easing: 'cubic-bezier(.2,.6,.2,1)', cleanup: true });
+  sr.reveal('.headline', { origin: 'left' });
+  sr.reveal('.subhead, .cta', { origin: 'bottom', interval: 100 });
+  sr.reveal('.hero-card', { origin: 'right' });
+  sr.reveal('.reveal .card', { origin: 'bottom', interval: 120 });
+  sr.reveal('.contact-item', { origin: 'bottom', interval: 100 });
+
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
 </script>
-
-
-    // Theme toggle with memory
-    const themeBtn = document.getElementById('themeBtn');
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') document.documentElement.classList.add('light');
-    themeBtn.addEventListener('click', () => {
-      document.documentElement.classList.toggle('light');
-      const mode = document.documentElement.classList.contains('light') ? 'light' : 'dark';
-      themeBtn.innerHTML = mode === 'light' ? '<i class="ri-sun-line"></i>' : '<i class="ri-moon-line"></i>';
-      localStorage.setItem('theme', mode);
-    });
-
-    // Resume button (edit the URL below)
-    document.getElementById('resumeBtn').addEventListener('click', () => {
-      // Replace with your real resume URL (PDF in repo or Google Drive direct link)
-      window.open('resume.pdf', '_blank');
-    });
-
-    // Mobile menu
-    const menuBtn = document.getElementById('menuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const toggleMenu = () => mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
-    menuBtn.addEventListener('click', toggleMenu);
-    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.style.display = 'none'));
-
-    // Active link highlight on scroll
-    const links = [...document.querySelectorAll('.links a')];
-    const sections = links.map(a => document.querySelector(a.getAttribute('href')));
-    const onScroll = () => {
-      const y = window.scrollY + 100;
-      sections.forEach((sec, i) => {
-        const top = sec.offsetTop, bottom = top + sec.offsetHeight;
-        if (y >= top && y < bottom) {
-          links.forEach(l => l.classList.remove('active'));
-          links[i].classList.add('active');
-        }
-      });
-      // Back to top button
-      document.getElementById('toTop').classList.toggle('show', window.scrollY > 400);
-    };
-    window.addEventListener('scroll', onScroll);
-    onScroll();
-
-    // Back to top
-    document.getElementById('toTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-    // ScrollReveal animations
-    const sr = ScrollReveal({ distance: '40px', duration: 800, easing: 'cubic-bezier(.2,.6,.2,1)', cleanup: true });
-    sr.reveal('.headline', { origin: 'left' });
-    sr.reveal('.subhead, .cta', { origin: 'bottom', interval: 100 });
-    sr.reveal('.hero-card', { origin: 'right' });
-    sr.reveal('.reveal .card', { origin: 'bottom', interval: 120 });
-    sr.reveal('.contact-item', { origin: 'bottom', interval: 100 });
-
-    // Year
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
 </body>
 </html>
+
 
 
 
